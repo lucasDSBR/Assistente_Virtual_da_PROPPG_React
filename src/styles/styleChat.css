@@ -2,7 +2,7 @@
 #chat{
     border-radius: 10px;
     font-family: Roboto, Arial, Helvetica, sans-serif;
-    width: 17rem;
+    width: 18.75rem;
     height: 23rem;
 }
 
@@ -54,15 +54,11 @@
 
 #chat-body{
     font-size: 11pt;
-    width: auto;
     position: relative;
     height: 17rem;
+    overflow-y: scroll;
     border-left: 1px solid #C2C6CA;
     border-right: 1px solid #C2C6CA;
-}
-#chat-body-itens{
-    position: relative;
-    display: inline;
 }
 #chat-body-item-msg-user{
     display: flex;
@@ -107,9 +103,9 @@
     width: 11.5rem;
     position: relative;
     left: -20px;
-    bottom: -30px;
+    bottom: -35px;
     border-radius: 0px 10px 10px 10px;
-    margin: 10px;
+    margin-bottom: 40px;
     padding: 10px;
     background-color:#EBEBEB;
     color: #343a40;
