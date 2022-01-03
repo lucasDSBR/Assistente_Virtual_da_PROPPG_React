@@ -1,15 +1,16 @@
 
 #chat{
-    border-radius: 10px;
+    border-radius: 20px 20px 0px 20px;
     font-family: Roboto, Arial, Helvetica, sans-serif;
     width: 18.75rem;
     height: 23rem;
+    box-shadow: 3px 5px 10px #666;
 }
 
 
 
 #chat-header{
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 20px 20px 0px 0px;
     background-color: #3B8DBD;
     position: relative;
     height: 3rem;
@@ -57,8 +58,6 @@
     position: relative;
     height: 17rem;
     overflow-y: scroll;
-    border-left: 1px solid #C2C6CA;
-    border-right: 1px solid #C2C6CA;
 }
 #chat-body-item-msg-user{
     display: flex;
@@ -120,11 +119,8 @@
     bottom: auto;
     position: relative;
     height: 3rem;
-    
+    border-radius: 0px 0px 0px 20px;
     border-top: 0.0625rem solid #C2C6CA;
-    border-left: 0.0625rem solid #C2C6CA;
-    border-right: 0.0625rem solid #C2C6CA;
-    border-bottom: 0.0625rem solid #C2C6CA;
 }
 #chat-footer-itens{
     
@@ -153,4 +149,17 @@
 #chat-header-itens-img-item{
     right: -10px;
     padding: 0px;
+}
+
+#chat-popup{
+    position: absolute;
+    left: 300px;
+    top: 370px;
+}
+#chat-popup-foto-img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid #C2C6CA;
+    margin: 10px;
 }
