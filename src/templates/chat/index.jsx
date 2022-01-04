@@ -12,14 +12,14 @@ import close from '../../assets/svg/close.svg'
 export const Chat = () => {
     const [texto, setTexto] = React.useState([]);
     const [tex, setTex] = React.useState([]);
-    const [fecharChart, setFecharChart] = React.useState(false);
+    const [abrirChat, setAbrirChat] = React.useState(false);
+    const [fecharPopup, setFecharPopup] = React.useState(false);
     const divRef = React.useRef();
     React.useLayoutEffect(() => {
         divRef.current.scrollTop = divRef.current.scrollHeight;
     });
     const handleClick = () =>{
-
-        const a = document.getElementById('chat-footer-itens-input-input').value = ""
+        const clearInput = document.getElementById('chat-footer-itens-input-input').value = ""
         setTexto((c) => [...c, {'user': tex}]);
         const requestOptions = {
             method: 'POST',
