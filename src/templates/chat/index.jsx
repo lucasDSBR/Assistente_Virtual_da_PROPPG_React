@@ -8,6 +8,7 @@ import Avatar from '../../assets/svg/avatar.png'
 import closeChat from '../../assets/svg/CloseChat.svg'
 import { popupMsg } from '../../components/popup-msg/popupMsg'
 import closeAlert from '../../assets/svg/CloseAlert.svg'
+import close from '../../assets/svg/close.svg'
 export const Chat = () => {
     const [texto, setTexto] = React.useState([]);
     const [tex, setTex] = React.useState([]);
@@ -18,6 +19,7 @@ export const Chat = () => {
     });
     const handleClick = () =>{
 
+        const a = document.getElementById('chat-footer-itens-input-input').value = ""
         setTexto((c) => [...c, {'user': tex}]);
         const requestOptions = {
             method: 'POST',
@@ -33,17 +35,8 @@ export const Chat = () => {
     }
     return (
         <>
-            <div id="all-chat">
-                <div class="chat-popup-msg-alert" >
-                    <span id="chat-popup-msg-alert-close">
-                        <img src={closeAlert} id="chat-popup-msg-alert-close-img"/>
-                    </span>
-                    <div id="chat-popup-msg-alert-texto">
-                        <p id="chat-popup-msg-alert-texto-p">👋😃Olá! Me chamo BALINU! Em que posso ajudar?</p>
-                    </div>
-                </div>
-                <div id="chat-popup">
-                    <div id="chat" style={styles}>
+            <div id="all-chat" style={styles}>
+                <div id="chat" style={styles}>
                         <div id="chat-header">
                             <div id="chat-header-Itens">
                                 <div id="chat-header-itens-textos">
@@ -63,7 +56,7 @@ export const Chat = () => {
                                                 <>
                                                 <div id="chat-body-item-msg-user" key={c.user}>
                                                     <div id="chat-body-item-msg-user-texto">
-                                                        <p id="chat-body-item-msg-user-texto-p">{c.user}</p>
+                                                        <p id="chat-body-item-msg-user-texto-p" >{c.user}</p>
                                                     </div>
                                                 </div>
                                                 </>
@@ -72,12 +65,12 @@ export const Chat = () => {
                                         if(c.bot){
                                             return (
                                                 <>
-                                                    <div id="chat-body-item-msg-bot" key={c.bot}>
+                                                    <div id="chat-body-item-msg-bot">
                                                         <div id="chat-body-item-msg-bot-foto">
                                                             <img src={Avatar} id="chat-body-item-msg-bot-foto-img"/>
                                                         </div>
                                                         <div id="chat-body-item-msg-bot-texto">
-                                                            <p id="chat-body-item-msg-bot-texto-p">{c.bot}</p>
+                                                            <p id="chat-body-item-msg-bot-texto-p" >{c.bot}</p>
                                                         </div>
                                                     </div>
                                                 </>
@@ -97,12 +90,20 @@ export const Chat = () => {
                             </div>
                         </div>
                     </div>
-                    <img src={Avatar} id="chat-popup-foto-img"/>
-                    <div id="chat-sombra-img"></div>
+                <div id="chat-popup">
+                    <div className="chat-popup-msg-alert" >
+                        <span id="chat-popup-msg-alert-close">
+                            <img src={close} id="chat-popup-msg-alert-close-img"/>
+                        </span>
+                        <div id="chat-popup-msg-alert-texto">
+                            <p id="chat-popup-msg-alert-texto-p">👋😃Olá! Me chamo BALINU! Em que posso ajudar?</p>
+                        </div>
+                    </div>
+                    <div className="chat-popup-img-e-sombra">
+                        <img src={Avatar} id="chat-popup-foto-img"/>
+                    </div>
                 </div>
-                
             </div>
-            
         </>
     );
 }
