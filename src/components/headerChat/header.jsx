@@ -4,17 +4,14 @@ import closeChat from '../../assets/svg/CloseChat.svg'
 export const Header = () => {
     return (
         <>
-            <div id="chat-header">
-                <div id="chat-header-Itens">
-                    <div id="chat-header-itens-textos">
-                        <p id="nomeChat">BALINU</p>
-                        <p id="descricaoChat">Assistente Virtual da PROPPG</p>
-                    </div>
-                    <div id="chat-header-itens-img">
-                        <img src={closeChat} alt="Fechar" id="chat-header-itens-img-item"/>
-                    </div>
+            {/* <div class="chat-popup-msg-alert" >
+                <span id="chat-popup-msg-alert-close">
+                    <img src={closeAlert} id="chat-popup-msg-alert-close-img"/>
+                </span>
+                <div id="chat-popup-msg-alert-texto">
+                    <p id="chat-popup-msg-alert-texto-p">👋😃Olá! Me chamo BALINU! Em que posso ajudar?</p>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }
