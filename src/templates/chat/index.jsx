@@ -17,12 +17,18 @@ export const Chat = () => {
     const [abrirChat, setAbrirChat] = React.useState(false);
     const [abrirOptions, setAbrirOptions] = React.useState(false);
     const [fecharPopup, setFecharPopup] = React.useState(false);
+    const [fecharPopupPermenente, setFecharPopupPermenente] = React.useState(false);
     const divRef = React.useRef();
     React.useLayoutEffect(() => {
         if(abrirChat){
             divRef.current.scrollTop = divRef.current.scrollHeight;
         }
-    });
+    })
+    React.useEffect(() => {
+        if(localStorage.getItem("fecharPopupPermenente") == "true"){
+            setFecharPopupPermenente(true)
+        }
+    })
     const handleClick = () =>{
         const clearInput = document.getElementById('chat-footer-itens-input-input').value = ""
         setTexto((c) => [...c, {'user': tex}]);
@@ -42,8 +48,16 @@ export const Chat = () => {
     const handleClosePopup = () => {
         setFecharPopup(true)
     }
+    const handleClosePopupPermanente = (permenente) => {
+        if(permenente){
+            localStorage.setItem('fecharPopupPermenente', true)
+            setFecharPopupPermenente(true)
+        }else{
+            setFecharPopupPermenente(true)
+        }
+    }
     const handleOpenChat = () => {
-        setFecharPopup(true)
+        handleClosePopupPermanente(false)
         setAbrirOptions(false)
         setAbrirChat(!abrirChat)
     }
@@ -119,16 +133,26 @@ export const Chat = () => {
                         </div>
                     </div>}
                 <div id="chat-popup">
-                    {!fecharPopup &&
+                    {!fecharPopupPermenente &&
                     <div className="chat-popup-msg-alert" >
                         <span id="chat-popup-msg-alert-close">
                             <img src={close} id="chat-popup-msg-alert-close-img" onClick={() => handleClosePopup()}/>
                         </span>
                         <div id="chat-popup-msg-alert-texto">
-                            <p id="chat-popup-msg-alert-texto-p">👋😃Olá! Me chamo BALINU! Em que posso ajudar?</p>
+                            {!fecharPopup &&
+                                <p id="chat-popup-msg-alert-texto-p">👋😃Olá! Me chamo BALINU! Em que posso ajudar?</p>
+                            }
+                            {fecharPopup &&
+                                <p id="chat-popup-msg-alert-texto-p">
+                                    🙂 Deseja que eu pare de mandar mensagens como essa ? 
+                                    <botton id="chat-popup-msg-alert-texto-bottom-sim" onClick={() => handleClosePopupPermanente(true)}>Sim</botton>
+                                    <botton  id="chat-popup-msg-alert-texto-bottom-nao" onClick={() => handleClosePopupPermanente(false)}>Não</botton>
+                                </p> 
+                            }
+                            
                         </div>
                     </div>}
-                    {fecharPopup && <div  className="chat-popup-msg-none" ></div>}
+                    {fecharPopupPermenente &&<div className="chat-popup-msg-none" ></div>}
                     <div className="chat-popup-img-e-sombra">
                         <img src={Avatar} id="chat-popup-foto-img" onClick={() => handleOpenChat()}/>
                     </div>
