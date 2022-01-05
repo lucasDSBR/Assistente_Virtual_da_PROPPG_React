@@ -6,6 +6,7 @@ import styles from '../../styles/styleChat.css'
 import Send from '../../assets/svg/Send.svg'
 import Record from '../../assets/svg/Record.svg'
 import Avatar from '../../assets/svg/avatar.png'
+import Options from '../../assets/svg/Options.svg'
 import closeChat from '../../assets/svg/CloseChat.svg'
 import { popupMsg } from '../../components/popup-msg/popupMsg'
 import closeAlert from '../../assets/svg/CloseAlert.svg'
@@ -14,10 +15,13 @@ export const Chat = () => {
     const [texto, setTexto] = React.useState([]);
     const [tex, setTex] = React.useState([]);
     const [abrirChat, setAbrirChat] = React.useState(false);
+    const [abrirOptions, setAbrirOptions] = React.useState(false);
     const [fecharPopup, setFecharPopup] = React.useState(false);
     const divRef = React.useRef();
     React.useLayoutEffect(() => {
-        divRef.current.scrollTop = divRef.current.scrollHeight;
+        if(abrirChat){
+            divRef.current.scrollTop = divRef.current.scrollHeight;
+        }
     });
     const handleClick = () =>{
         const clearInput = document.getElementById('chat-footer-itens-input-input').value = ""
@@ -34,10 +38,22 @@ export const Chat = () => {
             .then(response => response.json())
             .then(data => setTexto((c) => [...c, {'bot': data.responseMessage}]));
     }
+
+    const handleClosePopup = () => {
+        setFecharPopup(true)
+    }
+    const handleOpenChat = () => {
+        setFecharPopup(true)
+        setAbrirOptions(false)
+        setAbrirChat(!abrirChat)
+    }
+    const handleOpenOptions = () => {
+        setAbrirOptions(!abrirOptions)
+    }
     return (
         <>
             <div id="all-chat" style={styles}>
-                <div id="chat" style={styles}>
+                {abrirChat && <div id="chat" style={styles}>
                         <div id="chat-header">
                             <div id="chat-header-Itens">
                                 <div id="chat-header-itens-textos">
@@ -45,7 +61,15 @@ export const Chat = () => {
                                     <p id="descricaoChat">Assistente Virtual da PROPPG</p>
                                 </div>
                                 <div id="chat-header-itens-img">
-                                    <img src={closeChat} alt="Fechar" id="chat-header-itens-img-item"/>
+                                    <img src={Options} alt="Fechar" id="chat-header-itens-img-item" onClick={() => handleOpenOptions()}/>
+                                    {abrirOptions && 
+                                    <div id="chat-header-itens-options">
+                                        <ul id="chat-header-itens-options-ul">
+                                            <li id="chat-header-itens-options-ul-li">Configurações</li>
+                                            <li id="chat-header-itens-options-ul-li">Sair da Conversa</li>
+                                        </ul>
+                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -93,18 +117,20 @@ export const Chat = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>}
                 <div id="chat-popup">
+                    {!fecharPopup &&
                     <div className="chat-popup-msg-alert" >
                         <span id="chat-popup-msg-alert-close">
-                            <img src={close} id="chat-popup-msg-alert-close-img"/>
+                            <img src={close} id="chat-popup-msg-alert-close-img" onClick={() => handleClosePopup()}/>
                         </span>
                         <div id="chat-popup-msg-alert-texto">
                             <p id="chat-popup-msg-alert-texto-p">👋😃Olá! Me chamo BALINU! Em que posso ajudar?</p>
                         </div>
-                    </div>
+                    </div>}
+                    {fecharPopup && <div  className="chat-popup-msg-none" ></div>}
                     <div className="chat-popup-img-e-sombra">
-                        <img src={Avatar} id="chat-popup-foto-img"/>
+                        <img src={Avatar} id="chat-popup-foto-img" onClick={() => handleOpenChat()}/>
                     </div>
                 </div>
             </div>
