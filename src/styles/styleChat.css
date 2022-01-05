@@ -53,9 +53,10 @@
 #chat-header-itens-img-item{
     position: relative;
     top: 0.40rem;
-    width: .80rem;
-    height: .90rem;
+    width: .50rem;
+    height: .60rem;
 }
+
 #chat-header-itens-img-item{
     right: -10px;
     padding: 0px;
@@ -153,12 +154,15 @@
 }
 #chat-footer-itens{
     display: grid;
-    grid-template-columns: 6fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 5px;
     position: relative;
+    background-color: #EEEEEE;
+    border-radius: 50px;
+    margin-top: 5px;
 }
 #chat-footer-itens-input{
     padding: 10px;
-    left: 15px;
     position: relative;
 }
 #chat-footer-itens-send{
@@ -166,16 +170,37 @@
     position: relative;
 }
 
+#chat-footer-itens-record{
+    justify-items: start;
+    position: relative;
+    padding: 5px;
+}
+
 #chat-footer-itens-input-input{
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: 1px solid #C2C6CA;
+    background-color: #EEEEEE;
     width: 200px;
 }
 #chat-footer-itens-input-input:focus {
     outline-width: 0;
 }
+#chat-footer-itens-record-item{
+    position: relative;
+    top: 0.35rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+#chat-footer-itens-img-item{
+    position: relative;
+    top: 0.35rem;
+    width: 1.7rem;
+    height: 1.7rem;
+}
+
+
 
 
 #chat-popup{

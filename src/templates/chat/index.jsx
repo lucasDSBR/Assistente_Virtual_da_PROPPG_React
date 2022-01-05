@@ -4,6 +4,7 @@ import { Body } from '../../components/bodyChat/body'
 import { Footer } from '../../components/footerChat/footer'
 import styles from '../../styles/styleChat.css'
 import Send from '../../assets/svg/Send.svg'
+import Record from '../../assets/svg/Record.svg'
 import Avatar from '../../assets/svg/avatar.png'
 import closeChat from '../../assets/svg/CloseChat.svg'
 import { popupMsg } from '../../components/popup-msg/popupMsg'
@@ -81,11 +82,14 @@ export const Chat = () => {
                         </div>
                         <div id="chat-footer">
                             <div id="chat-footer-itens">
+                                <div id="chat-footer-itens-record">
+                                    <img src={Record} alt="Record" id="chat-footer-itens-record-item"/>
+                                </div>
                                 <div id="chat-footer-itens-input">
-                                    <input type="text" onKeyUp={(e)=> {if(e.keyCode === 13){handleClick()}}} id="chat-footer-itens-input-input" onChange={(e) => setTex(e.target.value)}></input>
+                                    <input type="text" onKeyUp={(e)=> {if(e.keyCode === 13){handleClick()}}} id="chat-footer-itens-input-input" onChange={(e) => setTex(e.target.value)} autocomplete="off"></input>
                                 </div>
                                 <div id="chat-footer-itens-send">
-                                    <img src={Send} alt="send" id="chat-header-itens-img-item" onClick={() => handleClick()}/>
+                                    <img src={Send} alt="send" id="chat-footer-itens-img-item" onClick={() => handleClick()}/>
                                 </div>
                             </div>
                         </div>
