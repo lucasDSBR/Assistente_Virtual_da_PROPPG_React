@@ -226,6 +226,17 @@
     height: 1.7rem;
 }
 
+#chat-body-item-msg-bot-digitando{
+    position: relative;
+
+}
+#chat-body-item-msg-bot-digitando-texto-p{
+    color: #343a40;
+    position: relative;
+    left: 10px;
+    width: 100px;
+}
+
 
 
 
