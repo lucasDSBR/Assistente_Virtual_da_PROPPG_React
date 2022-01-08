@@ -11,15 +11,20 @@ import closeChat from '../../assets/svg/CloseChat.svg'
 import { popupMsg } from '../../components/popup-msg/popupMsg'
 import closeAlert from '../../assets/svg/CloseAlert.svg'
 import close from '../../assets/svg/close.svg'
+import {Salutation} from '../../util/functions/getTimeForSalutation'
 export const Chat = () => {
     const [texto, setTexto] = React.useState([]);
     const [tex, setTex] = React.useState([]);
     const [abrirChat, setAbrirChat] = React.useState(false);
+    const [salutation, setSalutation] = React.useState('');
+    const [digitando, setDigitando] = React.useState(false);
     const [abrirOptions, setAbrirOptions] = React.useState(false);
     const [fecharPopup, setFecharPopup] = React.useState(false);
     const [fecharPopupPermenente, setFecharPopupPermenente] = React.useState(false);
     const divRef = React.useRef();
     React.useLayoutEffect(() => {
+        var teste = Salutation()
+        setSalutation(teste)
         if(abrirChat){
             divRef.current.scrollTop = divRef.current.scrollHeight;
         }
@@ -31,6 +36,7 @@ export const Chat = () => {
     })
     const handleClick = () =>{
         const clearInput = document.getElementById('chat-footer-itens-input-input').value = ""
+        setDigitando(true)
         setTexto((c) => [...c, {'user': tex}]);
         const requestOptions = {
             method: 'POST',
@@ -42,9 +48,12 @@ export const Chat = () => {
         };
         fetch('https://appbalinu.herokuapp.com/api/requestText/', requestOptions)
             .then(response => response.json())
-            .then(data => setTexto((c) => [...c, {'bot': data.responseMessage}]));
+            .then(data => {
+                setTexto((c) => [...c, {'bot': data.responseMessage}])
+                setDigitando(false)
+            });
     }
-
+    
     const handleClosePopup = () => {
         setFecharPopup(true)
     }
@@ -115,7 +124,17 @@ export const Chat = () => {
                                                 </>
                                             )
                                         }
-                                    })}
+                                    })
+                                    }
+                                    {digitando &&
+                                    <div id="chat-body-item-msg-bot-digitando">
+                                        <div id="chat-body-item-msg-bot-digitando-texto">
+                                            <p id="chat-body-item-msg-bot-digitando-texto-p" >
+                                                Digitando...
+                                            </p>
+                                        </div>
+                                    </div>
+                                    }
                             </div>
                         </div>
                         <div id="chat-footer">
@@ -140,7 +159,7 @@ export const Chat = () => {
                         </span>
                         <div id="chat-popup-msg-alert-texto">
                             {!fecharPopup &&
-                                <p id="chat-popup-msg-alert-texto-p">👋😃Olá! Me chamo BALINU! Em que posso ajudar?</p>
+                                <p id="chat-popup-msg-alert-texto-p">👋😃{salutation}! Me chamo BALINU! Em que posso ajudar?</p>
                             }
                             {fecharPopup &&
                                 <p id="chat-popup-msg-alert-texto-p">
