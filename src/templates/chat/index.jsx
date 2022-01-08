@@ -23,8 +23,8 @@ export const Chat = () => {
     const [fecharPopupPermenente, setFecharPopupPermenente] = React.useState(false);
     const divRef = React.useRef();
     React.useLayoutEffect(() => {
-        var teste = Salutation()
-        setSalutation(teste)
+        var msgSalutation = Salutation()
+        setSalutation(msgSalutation)
         if(abrirChat){
             divRef.current.scrollTop = divRef.current.scrollHeight;
         }
@@ -89,7 +89,7 @@ export const Chat = () => {
                                     <div id="chat-header-itens-options">
                                         <ul id="chat-header-itens-options-ul">
                                             <li id="chat-header-itens-options-ul-li">Configurações</li>
-                                            <li id="chat-header-itens-options-ul-li">Sair da Conversa</li>
+                                            <li id="chat-header-itens-options-ul-li" onClick={() => handleOpenChat()}>Sair da Conversa</li>
                                         </ul>
                                     </div>
                                     }
