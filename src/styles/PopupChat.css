@@ -1,11 +1,12 @@
-#chat-popup{
+.chat-popup{
     position: relative;
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 20px 20px 20px;
     align-content: end;
+    cursor: pointer;
 }
-#chat-popup-foto-img{
+.chat-popup-foto-img{
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -29,21 +30,21 @@
     width: 300px;
     height: 80px;
 }
-#chat-popup-msg-alert-close{
+.chat-popup-msg-alert-close{
     position: relative;
     top: -8px;
     left: -8px;
 }
-#chat-popup-msg-alert-close-img{
-    width: 20px;
+.chat-popup-msg-alert-close-img{
+    width: 10px;
     padding: 0px;
     margin: 0px;
 }
 
-#chat-popup-msg-alert-texto{
+.chat-popup-msg-alert-texto{
     position: relative;
 }
-#chat-popup-msg-alert-texto-p{
+.chat-popup-msg-alert-texto-p{
     word-wrap: break-word;
     width: 260px;
     left: 20px;
@@ -52,7 +53,7 @@
     padding: 0px;
     margin: 0px;
 }
-#chat-popup-msg-alert-texto-bottom-sim{
+.chat-popup-msg-alert-texto-bottom-sim{
     position: relative;
     background-color: #82b965;
     padding-left: 5px;
@@ -61,7 +62,7 @@
     border-radius: 2px;
     cursor: pointer;
 }
-#chat-popup-msg-alert-texto-bottom-nao{
+.chat-popup-msg-alert-texto-bottom-nao{
     position: relative;
     background-color: #f54949;
     padding-left: 5px;

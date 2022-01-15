@@ -1,4 +1,4 @@
-#chat-footer{
+.chat-footer{
     background-color: #fff;
     bottom: auto;
     position: relative;
@@ -6,7 +6,7 @@
     border-radius: 0px 0px 0px 20px;
     border-top: 0.0625rem solid #C2C6CA;
 }
-#chat-footer-itens{
+.chat-footer-itens{
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     gap: 5px;
@@ -14,46 +14,51 @@
     border-radius: 50px;
     margin-top: 5px;
 }
-#chat-footer-itens-input{
+.chat-footer-itens-input{
     padding: 10px;
     position: relative;
 }
-#chat-footer-itens-send{
+.chat-footer-itens-send{
     justify-items: end;
     position: relative;
+    cursor: pointer;
 }
 
-#chat-footer-itens-record{
+.chat-footer-itens-record{
     justify-items: start;
     position: relative;
-    padding: 5px;
+    padding: 0px;
 }
 
-#chat-footer-itens-input-input{
+.chat-footer-itens-input-input{
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: 1px solid #C2C6CA;
     width: 200px;
 }
-#chat-footer-itens-input-input:focus {
+.chat-footer-itens-input-input:focus {
     outline-width: 0;
 }
-#chat-footer-itens-record-item{
+.chat-footer-itens-record-item{
     position: relative;
     left: 0.3rem;
     top: 0.25rem;
     width: 1.5rem;
     height: 1.5rem;
+    padding: 5px;
+    cursor: pointer;
 }
-#chat-footer-itens-recordGif-item{
+.chat-footer-itens-recordGif-item{
     position: relative;
+    padding-left: 60px;
+    padding-right: 100px;
     left: -2rem;
     top: -0.2rem;
     width: 2.5rem;
     height: 1.5rem;
 }
-#chat-footer-itens-img-item{
+.chat-footer-itens-img-item{
     position: relative;
     top: 0.35rem;
     width: 1.7rem;
