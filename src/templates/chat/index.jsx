@@ -1,20 +1,23 @@
 import React from "react";
-import { Header } from '../../components/headerChat/header'
-import { Body } from '../../components/bodyChat/body'
-import { Footer } from '../../components/footerChat/footer'
-import styles from '../../styles/styleChat.css'
-import Send from '../../assets/svg/Send.svg'
-import Record from '../../assets/svg/Record.svg'
-import Avatar from '../../assets/svg/avatar.png'
-import Options from '../../assets/svg/Options.svg'
-import closeChat from '../../assets/svg/CloseChat.svg'
-import { popupMsg } from '../../components/popup-msg/popupMsg'
-import closeAlert from '../../assets/svg/CloseAlert.svg'
-import close from '../../assets/svg/close.svg'
-import {Salutation} from '../../util/functions/getTimeForSalutation'
+import { Header } from '../../components/headerChat/header';
+import { Body } from '../../components/bodyChat/body';
+import { Footer } from '../../components/footerChat/footer';
+import styles from '../../styles/styleChat.css';
+import Send from '../../assets/svg/Send.svg';
+import Record from '../../assets/svg/Record.svg';
+import RecordGif from '../../assets/gif/record.gif';
+import Avatar from '../../assets/svg/avatar.png';
+import Options from '../../assets/svg/Options.svg';
+import closeChat from '../../assets/svg/CloseChat.svg';
+import { popupMsg } from '../../components/popup-msg/popupMsg';
+import closeAlert from '../../assets/svg/CloseAlert.svg';
+import close from '../../assets/svg/close.svg';
+import {Salutation} from '../../util/functions/getTimeForSalutation';
+import {speeach} from '../../util/functions/SpeachForText';
 export const Chat = () => {
     const [texto, setTexto] = React.useState([]);
     const [tex, setTex] = React.useState([]);
+    const [startRecord, setStartRecord] = React.useState(false);
     const [abrirChat, setAbrirChat] = React.useState(false);
     const [salutation, setSalutation] = React.useState('');
     const [digitando, setDigitando] = React.useState(false);
@@ -34,23 +37,33 @@ export const Chat = () => {
             setFecharPopupPermenente(true)
         }
     })
-    const handleClick = () =>{
+    const handleClick = (text) =>{
         const clearInput = document.getElementById('chat-footer-itens-input-input').value = ""
         setDigitando(true)
-        setTexto((c) => [...c, {'user': tex}]);
+        let message = "";
+
+        if(text != null){
+            setTexto((c) => [...c, {'user': text}]);
+            message = text
+        }else {
+            setTexto((c) => [...c, {'user': tex}]);
+            message = tex
+        }
+            
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 "projectId": "newagent-oqdb",
-                "requestText": `${tex}`
+                "requestText": `${message}`
             })
         };
+        setStartRecord(false)
         fetch('https://appbalinu.herokuapp.com/api/requestText/', requestOptions)
             .then(response => response.json())
             .then(data => {
                 setTexto((c) => [...c, {'bot': data.responseMessage}])
-                setDigitando(false)
+                setDigitando(false);
             });
     }
     
@@ -72,6 +85,25 @@ export const Chat = () => {
     }
     const handleOpenOptions = () => {
         setAbrirOptions(!abrirOptions)
+    }
+    const teste = () => {
+        setStartRecord(true)
+        let speechRecognition = new window.webkitSpeechRecognition ();
+
+        speechRecognition.continuous = false;
+
+        speechRecognition.onresult = (event) => {
+            let interim_transcript = "";
+
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                setStartRecord(false)
+                handleClick(event.results[i][0].transcript)
+                
+            }
+            setStartRecord(false)
+        };
+        
+        speechRecognition.start()
     }
     return (
         <>
@@ -139,11 +171,12 @@ export const Chat = () => {
                         </div>
                         <div id="chat-footer">
                             <div id="chat-footer-itens">
-                                <div id="chat-footer-itens-record">
+                                <div id="chat-footer-itens-record" onClick={() => teste()}>
                                     <img src={Record} alt="Record" id="chat-footer-itens-record-item"/>
                                 </div>
                                 <div id="chat-footer-itens-input">
-                                    <input type="text" onKeyUp={(e)=> {if(e.keyCode === 13){handleClick()}}} id="chat-footer-itens-input-input" onChange={(e) => setTex(e.target.value)} autocomplete="off"></input>
+                                    {!startRecord && <input type="text" onKeyUp={(e)=> {if(e.keyCode === 13){handleClick(null)}}} id="chat-footer-itens-input-input" onChange={(e) => setTex(e.target.value)} autocomplete="off"></input>}
+                                    {startRecord && <img src={RecordGif} alt="RecordGif" id="chat-footer-itens-recordGif-item"/>}
                                 </div>
                                 <div id="chat-footer-itens-send">
                                     <img src={Send} alt="send" id="chat-footer-itens-img-item" onClick={() => handleClick()}/>

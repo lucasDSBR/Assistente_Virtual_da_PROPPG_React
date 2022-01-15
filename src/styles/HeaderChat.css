@@ -1,0 +1,77 @@
+#chat-header{
+    transition-delay: 3s;
+    border-radius: 15px 15px 0px 0px;
+    background-color: #3B8DBD;
+    position: relative;
+    height: 3rem;
+    z-index: 999;
+    
+}
+#chat-header-Itens{
+    font-size: 10pt;
+    color: #fff;
+    display: grid;
+    padding: 0.31rem;
+    grid-template-columns: 6fr 1fr;
+    position: relative;
+
+}
+#chat-header-itens-textos{
+    padding: 5px;
+    
+}
+#nomeChat{
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+}
+#descricaoChat{
+    padding: 0px;
+    margin: 0px;
+    position: fixed;
+}
+#chat-header-itens-img{
+    text-align: end;
+}
+#chat-header-itens-img-item{
+    position: relative;
+    top: 0.40rem;
+    width: .50rem;
+    height: .60rem;
+}
+
+#chat-header-itens-img-item{
+    right: -10px;
+    padding: 0px;
+}
+#chat-header-itens-img-item{
+    width: 30px;
+    height: 30px;
+    left: -5px;
+}
+#chat-header-itens-options{
+    background-color: #fff;
+    box-shadow: 0px 3px 5px #C2C6CA;
+    color: #555555;
+    position: relative;
+    text-align: start;
+    z-index: 99999;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 15px 0px 15px 15px;
+    left: -30px;
+    width: 200px;
+    animation: go-back-options 0.5s;
+}
+#chat-header-itens-options-ul {
+    padding: 10px;
+}
+#chat-header-itens-options-ul-li {
+    padding: 7px;
+    list-style:none;
+    border-bottom: 1px solid #55555534;
+}
+#chat-header-itens-options-ul-li:hover {
+    background-color: rgba(206, 206, 206, 0.123);
+    cursor: pointer;
+}
