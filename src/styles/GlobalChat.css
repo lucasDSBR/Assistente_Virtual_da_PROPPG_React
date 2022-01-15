@@ -1,4 +1,4 @@
-#all-chat{
+.all-chat{
     position: absolute;
     position: fixed;
     bottom: 0px;
@@ -7,7 +7,7 @@
     font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
-#chat{
+.chat{
     position: relative;
     border-radius: 15px 15px 0px 15px;
     width: 18.75rem;

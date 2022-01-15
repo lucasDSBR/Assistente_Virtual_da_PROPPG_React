@@ -8,11 +8,11 @@
     .chat-popup-msg-alert{
         width: 250px;
     }
-    #chat-popup-msg-alert-texto-p{
+    .chat-popup-msg-alert-texto-p{
         top: -10px;
         width: 220px;
     }
-    #chat {
+    .chat {
         left: 20px;
     }
 }
