@@ -10,8 +10,8 @@ import close from '../../assets/svg/close.svg';
 import back from '../../assets/svg/back.svg';
 import {Salutation} from '../../util/functions/getTimeForSalutation';
 export const Chat = () => {
-    const [texto, setTexto] = React.useState([]);
-    const [tex, setTex] = React.useState([]);
+    const [messages, setMessages] = React.useState([]);
+    const [message, setMessage] = React.useState([]);
     const [startRecord, setStartRecord] = React.useState(false);
     const [abrirChat, setAbrirChat] = React.useState(false);
     const [salutation, setSalutation] = React.useState('');
@@ -21,29 +21,32 @@ export const Chat = () => {
     const [fecharPopup, setFecharPopup] = React.useState(false);
     const [fecharPopupPermenente, setFecharPopupPermenente] = React.useState(false);
     const divRef = React.useRef();
+
     React.useLayoutEffect(() => {
         var msgSalutation = Salutation()
         setSalutation(msgSalutation)
         if(abrirChat){
             divRef.current.scrollTop = divRef.current.scrollHeight;
         }
-    })
+    });
+
     React.useEffect(() => {
         if(localStorage.getItem("fecharPopupPermenente") == "true"){
-            setFecharPopupPermenente(true)
+            setFecharPopupPermenente(true);
         }
-    })
+    });
+
     const handleClick = (text) =>{
         const clearInput = document.getElementById('chat-footer-itens-input-input-id').value = ""
         setDigitando(true)
-        let message = "";
+        let messagee = "";
         setStartRecord(false)
         if(text != null){
-            setTexto((c) => [...c, {'user': text, 'id': 1}]);
-            message = text
+            setMessages((c) => [...c, {'user': text, 'id': 1}]);
+            messagee = text
         }else {
-            setTexto((c) => [...c, {'user': tex}]);
-            message = tex
+            setMessages((c) => [...c, {'user': message}]);
+            messagee = message
         }
             
         const requestOptions = {
@@ -58,38 +61,43 @@ export const Chat = () => {
         fetch('https://appbalinu.herokuapp.com/api/requestText/', requestOptions)
             .then(response => response.json())
             .then(data => {
-                setTexto((c) => [...c, {'bot': data.responseMessage}])
+                setMessages((c) => [...c, {'bot': data.responseMessage}])
                 setDigitando(false);
             });
     }
     
     const handleClosePopup = () => {
-        setFecharPopup(true)
+        setFecharPopup(true);
+        
     }
+
     const handleClosePopupPermanente = (permenente) => {
-        console.log(permenente)
         if(permenente){
-            localStorage.setItem('fecharPopupPermenente', true)
-            setFecharPopup(true)
+            localStorage.setItem('fecharPopupPermenente', true);
+            setFecharPopup(true);
         }else{
             localStorage.removeItem('fecharPopupPermenente');
             setFecharPopupPermenente(true)
             setFecharPopup(true)
         }
     }
+
     const handleOpenChat = () => {
-        
         setAbrirOptions(false)
         setAbrirChat(!abrirChat)
+        handleClosePopupPermanente(false);
     }
+
     const handleOpenOptions = () => {
         setAbrirOptions(!abrirOptions)
         setAbrirSubOptions(false)
     }
+
     const handleOpenSubOptions = () => {
         setAbrirOptions(!abrirOptions)
         setAbrirSubOptions(!abrirSubOptions)
     }
+
     const RecordAudio = (action) => {
         setStartRecord(true)
         let speechRecognition = new window.webkitSpeechRecognition ();
@@ -119,37 +127,35 @@ export const Chat = () => {
                         <div className="chat-header">
                             <div className="chat-header-Itens">
                                 <div className="chat-header-itens-textos">
-                                    <div className="nomeChat">BALINU</div>
-                                    <div className="descricaoChat">Assistente Virtual da PROPPG</div>
+                                    <span className="chat-header-itens-nomeChat">BALINU</span>
+                                    <span className="chat-header-itens-descricaoChat">Assistente Virtual da PROPPG</span>
                                 </div>
                                 <div className="chat-header-itens-img">
                                     <img src={Options} alt="Fechar" className="chat-header-itens-img-item" onClick={() => handleOpenOptions()}/>
                                     {abrirOptions && 
-                                    <div className="chat-header-itens-options">
-                                        <ul className="chat-header-itens-options-ul">
-                                            <li className="chat-header-itens-options-ul-li" onClick={() => handleOpenSubOptions()}>Configurações</li>
-                                            <li className="chat-header-itens-options-ul-li" onClick={() => handleOpenChat()}>Sair da Conversa</li>
-                                        </ul>
-                                    </div>
+                                        <div className="chat-header-itens-options">
+                                            <ul className="chat-header-itens-options-ul">
+                                                <li className="chat-header-itens-options-ul-li" onClick={() => handleOpenSubOptions()}>Configurações</li>
+                                                <li className="chat-header-itens-options-ul-li" onClick={() => handleOpenChat()}>Sair da Conversa</li>
+                                            </ul>
+                                        </div>
                                     }
                                     {abrirSubOptions && 
-                                    <div className="chat-header-itens-suboptions">
-                                        
-                                        <ul className="chat-header-itens-suboptions-ul">
-                                        <div className="chat-header-itens-suboptions-back-img"><img src={back} onClick={() => handleOpenSubOptions()}/></div>
-                                            <li className="chat-header-itens-suboptions-ul-li"><div>Desativar PopUp</div> <input type="checkbox" className="chat-header-itens-suboptions-ul-li-checkbox" checked={!fecharPopupPermenente} onClick={() => handleClosePopupPermanente(!fecharPopupPermenente)}></input></li>
-                                        </ul>
-                                    </div>
+                                        <div className="chat-header-itens-suboptions">
+                                            
+                                            <ul className="chat-header-itens-suboptions-ul">
+                                            <div className="chat-header-itens-suboptions-back-img"><img src={back} onClick={() => handleOpenSubOptions()}/></div>
+                                                <li className="chat-header-itens-suboptions-ul-li"><div>Desativar PopUp</div> <input type="checkbox" className="chat-header-itens-suboptions-ul-li-checkbox" checked={!fecharPopupPermenente} onClick={() => handleClosePopupPermanente(!fecharPopupPermenente)}></input></li>
+                                            </ul>
+                                        </div>
                                     }
                                 </div>
                             </div>
                         </div>
                         <div className="chat-body" ref={divRef}>
                             <div className="chat-body-itens">
-                                    {texto.map((c) => {
-                                            
+                                    {messages.map((c) => {
                                             return (
-                                                
                                                 <>
                                                     {c.user &&
                                                     <div className="chat-body-item-msg-user" key={c.user}>
@@ -168,20 +174,18 @@ export const Chat = () => {
                                                         </div>
                                                     </div>
                                                     }
-
-                                                    
                                                 </>
                                             )
                                     })
                                     }
                                     {digitando &&
-                                    <div className="chat-body-item-msg-bot-digitando">
-                                        <div className="chat-body-item-msg-bot-digitando-texto">
-                                            <p className="chat-body-item-msg-bot-digitando-texto-p" >
-                                                Digitando...
-                                            </p>
+                                        <div className="chat-body-item-msg-bot-digitando">
+                                            <div className="chat-body-item-msg-bot-digitando-texto">
+                                                <p className="chat-body-item-msg-bot-digitando-texto-p" >
+                                                    Digitando...
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
                                     }
                             </div>
                         </div>
@@ -192,7 +196,7 @@ export const Chat = () => {
                                     {startRecord && <img src={RecordOff} alt="Record" className="chat-footer-itens-record-item" onClick={() => RecordAudio(false)}/>}
                                 </div>
                                 <div className="chat-footer-itens-input">
-                                    {!startRecord && <input type="text" onKeyUp={(e)=> {if(e.keyCode === 13){handleClick(null)}}} className="chat-footer-itens-input-input" id="chat-footer-itens-input-input-id" onChange={(e) => setTex(e.target.value)} autoComplete="off"></input>}
+                                    {!startRecord && <input type="text" onKeyUp={(e)=> {if(e.keyCode === 13){handleClick(null)}}} className="chat-footer-itens-input-input" id="chat-footer-itens-input-input-id" onChange={(e) => setMessage(e.target.value)} autoComplete="off"></input>}
                                     {startRecord && <img src={RecordGif} alt="RecordGif" className="chat-footer-itens-recordGif-item"/>}
                                 </div>
                                 <div className="chat-footer-itens-send">
@@ -205,7 +209,7 @@ export const Chat = () => {
                     {!fecharPopupPermenente &&
                     <div className="chat-popup-msg-alert" >
                         <span className="chat-popup-msg-alert-close">
-                            <div className="chat-popup-msg-alert-close-img"><img src={close} onClick={() => handleClosePopup()}/></div>
+                            <div className="chat-popup-msg-alert-close-img"><img src={close} onClick={() => handleClosePopup()} className="chat-popup-msg-alert-close-img"/></div>
                         </span>
                         <div className="chat-popup-msg-alert-texto" onClick={() => handleOpenChat()}>
                             {!fecharPopup &&
