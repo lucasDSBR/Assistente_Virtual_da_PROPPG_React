@@ -36,15 +36,17 @@
     left: -8px;
 }
 .chat-popup-msg-alert-close-img{
-    width: 10px;
+    width: 20px !important;
     padding: 0px;
     margin: 0px;
 }
 
 .chat-popup-msg-alert-texto{
+    text-align: start;
     position: relative;
 }
 .chat-popup-msg-alert-texto-p{
+    text-align: start;
     word-wrap: break-word;
     width: 260px;
     left: 20px;
