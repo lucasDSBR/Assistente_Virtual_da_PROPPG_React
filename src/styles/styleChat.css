@@ -6,14 +6,14 @@
 
 @media(max-width: 400px){
     .chat-popup-msg-alert{
-        width: 250px;
+        width: 250px !important;
     }
     .chat-popup-msg-alert-texto-p{
-        top: -10px;
-        width: 220px;
+        top: -10px !important;
+        width: 220px !important;
     }
     .chat {
-        left: 20px;
+        left: 20px !important;
     }
 }
 
