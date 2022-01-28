@@ -20,6 +20,7 @@ export const Chat = () => {
     const [abrirSubOptions, setAbrirSubOptions] = React.useState(false);
     const [fecharPopup, setFecharPopup] = React.useState(false);
     const [fecharPopupPermenente, setFecharPopupPermenente] = React.useState(false);
+    const [fecharPopupPermenenteMemoria, setFecharPopupPermenenteMemoria] = React.useState(false);
     const divRef = React.useRef();
 
     React.useLayoutEffect(() => {
@@ -37,7 +38,7 @@ export const Chat = () => {
     });
 
     const handleClick = (text) =>{
-        const clearInput = document.getElementById('chat-footer-itens-input-input-id').value = ""
+        const clearInput = document.getElementById('chat-footer-itens-input-input-id').value = "";
         setDigitando(true)
         let messagee = "";
         setStartRecord(false)
@@ -48,13 +49,13 @@ export const Chat = () => {
             setMessages((c) => [...c, {'user': message}]);
             messagee = message
         }
-            
+        
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 "projectId": "newagent-oqdb",
-                "requestText": `${message}`
+                "requestText": `${messagee}`
             })
         };
         setStartRecord(false)
@@ -63,29 +64,39 @@ export const Chat = () => {
             .then(data => {
                 setMessages((c) => [...c, {'bot': data.responseMessage}])
                 setDigitando(false);
+                setMessage(null);
             });
     }
     
     const handleClosePopup = () => {
         setFecharPopup(true);
-        
     }
 
-    const handleClosePopupPermanente = (permenente) => {
-        if(permenente){
+    const handleClosePopupPermanente = (fecharPermanente, fecharOuAbrir) => {
+        if(fecharPermanente == true){
             localStorage.setItem('fecharPopupPermenente', true);
-            setFecharPopup(true);
-        }else{
-            localStorage.removeItem('fecharPopupPermenente');
+            setFecharPopupPermenenteMemoria(true)
             setFecharPopupPermenente(true)
-            setFecharPopup(true)
+        }
+
+        if(fecharPermanente == false){
+            localStorage.removeItem('fecharPopupPermenente')
+            setFecharPopupPermenenteMemoria(false)
+            setFecharPopupPermenente(true)
+        }
+
+        if(fecharOuAbrir == true){
+            setFecharPopup(true);
+        }
+        if(fecharOuAbrir == false){
+            setFecharPopup(false);
         }
     }
 
     const handleOpenChat = () => {
         setAbrirOptions(false)
+        setFecharPopupPermenente(true)
         setAbrirChat(!abrirChat)
-        handleClosePopupPermanente(false);
     }
 
     const handleOpenOptions = () => {
@@ -99,7 +110,9 @@ export const Chat = () => {
     }
 
     const RecordAudio = (action) => {
-        setStartRecord(true)
+        console.log(action)
+        console.log("aqui")
+        setStartRecord(action)
         let speechRecognition = new window.webkitSpeechRecognition ();
 
         speechRecognition.continuous = false;
@@ -114,11 +127,9 @@ export const Chat = () => {
         if(action == true){
             speechRecognition.start()
         }else{
-            setStartRecord(false)
-            speechRecognition.start()
+            setStartRecord(action)
             speechRecognition.stop();
         }
-        
     }
     return (
         <>
@@ -145,7 +156,7 @@ export const Chat = () => {
                                             
                                             <ul className="chat-header-itens-suboptions-ul">
                                             <div className="chat-header-itens-suboptions-back-img"><img src={back} onClick={() => handleOpenSubOptions()}/></div>
-                                                <li className="chat-header-itens-suboptions-ul-li"><div>Desativar PopUp</div> <input type="checkbox" className="chat-header-itens-suboptions-ul-li-checkbox" checked={!fecharPopupPermenente} onClick={() => handleClosePopupPermanente(!fecharPopupPermenente)}></input></li>
+                                                <li className="chat-header-itens-suboptions-ul-li"><div>Desativar Boas-vindas</div> <input type="checkbox" className="chat-header-itens-suboptions-ul-li-checkbox" checked={fecharPopupPermenenteMemoria} onClick={() => {handleClosePopupPermanente(!fecharPopupPermenenteMemoria, null); handleOpenSubOptions()}}></input></li>
                                             </ul>
                                         </div>
                                     }
@@ -191,13 +202,15 @@ export const Chat = () => {
                         </div>
                         <div className="chat-footer">
                             <div className="chat-footer-itens">
-                                <div className="chat-footer-itens-record">
-                                    {!startRecord && <img src={Record} alt="Record" className="chat-footer-itens-record-item" onClick={() => RecordAudio(true)}/> }
-                                    {startRecord && <img src={RecordOff} alt="Record" className="chat-footer-itens-record-item" onClick={() => RecordAudio(false)}/>}
-                                </div>
+                                {!startRecord && <div className="chat-footer-itens-record" onClick={() => RecordAudio(true)}>
+                                    <img src={Record} alt="Record" className="chat-footer-itens-record-item" />
+                                </div>}
+                                {startRecord && <div className="chat-footer-itens-record" onClick={() => RecordAudio(false)}>
+                                    <img src={close} alt="Record" className="chat-footer-itens-record-item" />
+                                </div>}
                                 <div className="chat-footer-itens-input">
                                     {!startRecord && <input type="text" onKeyUp={(e)=> {if(e.keyCode === 13){handleClick(null)}}} className="chat-footer-itens-input-input" id="chat-footer-itens-input-input-id" onChange={(e) => setMessage(e.target.value)} autoComplete="off"></input>}
-                                    {startRecord && <img src={RecordGif} alt="RecordGif" className="chat-footer-itens-recordGif-item"/>}
+                                    {startRecord && <img src={RecordGif} alt="RecordGif" className="chat-footer-itens-recordGif-item"  onClick={() => RecordAudio(false)}/>}
                                 </div>
                                 <div className="chat-footer-itens-send">
                                     <img src={Send} alt="send" className="chat-footer-itens-img-item" onClick={() => handleClick()}/>
@@ -206,26 +219,25 @@ export const Chat = () => {
                         </div>
                     </div>}
                 <div className="chat-popup">
-                    {!fecharPopupPermenente &&
-                    <div className="chat-popup-msg-alert" >
-                        <span className="chat-popup-msg-alert-close">
-                            <div className="chat-popup-msg-alert-close-img"><img src={close} onClick={() => handleClosePopup()} className="chat-popup-msg-alert-close-img"/></div>
-                        </span>
-                        <div className="chat-popup-msg-alert-texto" onClick={() => handleOpenChat()}>
-                            {!fecharPopup &&
-                                <div className="chat-popup-msg-alert-texto-p">👋😃{salutation}! Me chamo BALINU! Em que posso ajudar?</div>
-                            }
-                            {fecharPopup &&
-                                <div className="chat-popup-msg-alert-texto-p">
-                                    🙂 Deseja que eu pare de mandar mensagens como essa ? 
-                                    <botton className="chat-popup-msg-alert-texto-bottom-sim" onClick={() => handleClosePopupPermanente(true)}>Sim</botton>
-                                    <botton  className="chat-popup-msg-alert-texto-bottom-nao" onClick={() => handleClosePopupPermanente(false)}>Não</botton>
-                                </div> 
-                            }
-                            
-                        </div>
-                    </div>}
-                    {fecharPopupPermenente &&<div className="chat-popup-msg-none" ></div>}
+                        {!fecharPopupPermenente &&
+                        <div className="chat-popup-msg-alert" >
+                            <span className="chat-popup-msg-alert-close">
+                                <div className="chat-popup-msg-alert-close-img"><img src={close} onClick={() => handleClosePopup()} className="chat-popup-msg-alert-close-img"/></div>
+                            </span>
+                            <div className="chat-popup-msg-alert-texto" onClick={() => handleOpenChat()}>
+                                {!fecharPopup &&
+                                    <div className="chat-popup-msg-alert-texto-p">👋😃{salutation}! Me chamo BALINU! Em que posso ajudar?</div>
+                                }
+                                {fecharPopup &&
+                                    <div className="chat-popup-msg-alert-texto-p">
+                                        🙂 Deseja que eu pare de mandar mensagens como essa ? 
+                                        <botton className="chat-popup-msg-alert-texto-bottom-sim" onClick={() => handleClosePopupPermanente(true, null)}>Sim</botton>
+                                        <botton  className="chat-popup-msg-alert-texto-bottom-nao" onClick={() => handleClosePopupPermanente(false, null)}>Não</botton>
+                                    </div> 
+                                }
+                            </div>
+                        </div>}
+                    {fecharPopupPermenente && <div className="chat-popup-msg-none" ></div> }
                     <div className="chat-popup-img-e-sombra">
                         <img src={Avatar} className="chat-popup-foto-img" onClick={() => handleOpenChat()}/>
                     </div>
